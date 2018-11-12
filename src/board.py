@@ -8,9 +8,9 @@ class Board:
         '''
         # sets the structure of board
         self._board = [
-            ["p1", "p1", "p2"],
-            ["p1", "p1", "p2"],
-            ["p1", "p1", "p2"],
+            ["np", "np", "np"],
+            ["np", "np", "np"],
+            ["np", "np", "np"],
         ]
 
 
@@ -43,6 +43,7 @@ class Board:
         self.set_rNc_position( mvColRight, mvRowDown)
 
 
+
     def _drawBoard( self, rowNum ):
         '''
         PRIVATE METHOD
@@ -60,7 +61,7 @@ class Board:
               print("|  " + col, end="  ")
 
           print(
-            f"| { self._mark_row_position_on_board(rowCount, self._curRow)}"
+            f"| { self._set_row_position_on_board(rowCount, self._curRow)}"
           ) # end of a row
 
           rowCount += 1
@@ -87,14 +88,14 @@ class Board:
         self._curCol = self._validate_rNc_number(colNum)
 
         # mark and drawboard
-        self._mark_column_position_and_draw_board( rowNum )
+        self._set_column_position_and_draw_board( rowNum )
 
 
 
 
 
 
-    def _mark_column_position_and_draw_board(self, rowNum):
+    def _set_column_position_and_draw_board(self, rowNum):
         '''
         PRIVATE METHOD
         sets a mark at the current position within board interface
@@ -110,7 +111,7 @@ class Board:
 
 
 
-    def _mark_row_position_on_board( self, count, rowNum ):
+    def _set_row_position_on_board( self, count, rowNum ):
         '''
         PRIVATE METHOD
         determines when row mark is to be placed
@@ -155,6 +156,7 @@ class Board:
 
 
 
+
     def move_column_to_right(self, right):
         '''
         changes the current position of the column by incrementing it by one.
@@ -173,6 +175,7 @@ class Board:
                 return self._curCol
 
         return self._curCol
+
 
 
 
@@ -197,6 +200,7 @@ class Board:
 
 
 
+
     def move_row_down(self, down):
         '''
         changes the current position of row by incrementing it by one.
@@ -218,6 +222,7 @@ class Board:
 
 
 
+
     def move_row_up(self, up):
         '''
         changes the current position of row by decrementing it by one.
@@ -236,6 +241,7 @@ class Board:
                 return self._curRow
 
         return self._curRow
+
 
 
 
@@ -265,3 +271,51 @@ class Board:
         else:
             raise Exception(
                 f"InputError: {mvInput} not an valid navigation character")
+
+
+
+
+    def mark_rNc_position(self):
+        '''
+        helps to mark current position if no mark is already present
+        '''
+
+        can_mark_position = self._check_mark_presence()
+
+        # curRow and curCol doesn't start from 0 and our list is 0 indexed
+        # whenever curRow and curCol is not 0 we will always subtract 1
+
+        if self._curRow != 0 and self._curCol != 0:
+            if can_mark_position:
+                self._board[self._curRow-1].pop(self._curCol-1)
+                self._board[self._curRow-1].insert(self._curCol-1, "nm")
+
+        else:
+            if can_mark_position:
+                self._board[self._curRow].pop(self._curCol)
+                self._board[self._curRow].insert(self._curCol, "nm")
+
+
+
+
+
+    def _check_mark_presence(self):
+        '''
+        PRIVATE METHOD
+        helps to validate if a user can mark current row and column position
+        in board. returns true if user can mark else it returns false
+        '''
+
+        # curRow and curCol doesn't start from 0 and our list is 0 indexed
+        # whenever curRow and curCol is not 0 we will always subtract 1
+
+        if self._curRow > 0 and self._curCol > 0:
+            result = self._board[self._curRow-1][self._curCol-1]
+        else:
+            result = self._board[self._curRow][self._curCol]
+
+
+        if result == 'p1' or result == 'p2':
+            return False
+        else:
+            return True
