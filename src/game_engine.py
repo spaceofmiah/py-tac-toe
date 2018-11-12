@@ -90,24 +90,34 @@ def compute_input_received( i_recieved, board_obj ):
     '''
     call appropriate method based on the input received
     '''
+
+    # updates the current column position by moving it to the right and
+    # re-display board
     if i_recieved.lower().startswith('r'):
         col_num = board_obj.move_column_to_right(i_recieved)
         row_num = board_obj.get_current_row( )
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
+
+    # updates the current column position by moving it to the left and
+    # re-display board
     if i_recieved.lower().startswith('l'):
         col_num = board_obj.move_column_to_left(i_recieved)
         row_num = board_obj.get_current_row( )
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
+
+    # updates the current row position by moving it down and re-display board
     if i_recieved.lower().startswith('u'):
         col_num = board_obj.get_current_column( )
         row_num = board_obj.move_row_up(i_recieved )
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
+
+    # updates the current row position by moving it down and re-display board
     if i_recieved.lower().startswith('d'):
         col_num = board_obj.get_current_column( )
         row_num = board_obj.move_row_down(i_recieved )
@@ -115,15 +125,23 @@ def compute_input_received( i_recieved, board_obj ):
         board_obj.set_rNc_position(col_num, row_num)
 
 
+    # add player mark to current row and col position only if that position
+    # has not been marked before. A user is given another chance to mark an
+    # empty position in case mark was not placed
+
     if i_recieved.lower().startswith('m'):
         playingPlayer = get_playing_player( )
-        board_obj.mark_rNc_position(playingPlayer.playerMark)
+        was_marked = board_obj.mark_rNc_position(playingPlayer.playerMark)
         row_num = board_obj.get_current_row( )
         col_num = board_obj.get_current_column( )
-        swap_player_turn( )
+        if was_marked:
+            swap_player_turn( )
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
+
+    # removes mark from current col and row position in board only when the
+    # player that's trying to remove the mark is also the one that sets it
 
     if i_recieved.lower().startswith('z'):
         playingPlayer = get_playing_player( )

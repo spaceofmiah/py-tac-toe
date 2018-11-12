@@ -269,6 +269,7 @@ class Board:
     def mark_rNc_position(self, marker):
         '''
         helps to mark current position if no mark is already present
+        returns True if mark was successfully placed else returns False
         '''
         new_mark = self._validate_marker(marker)
         can_mark_position = self._check_mark_presence()
@@ -280,11 +281,15 @@ class Board:
             if can_mark_position:
                 self._board[self._curRow-1].pop(self._curCol-1)
                 self._board[self._curRow-1].insert(self._curCol-1, new_mark)
+                return True
 
         else:
             if can_mark_position:
                 self._board[self._curRow].pop(self._curCol)
                 self._board[self._curRow].insert(self._curCol, new_mark)
+                return True
+                
+        return False
 
 
 
