@@ -1,6 +1,6 @@
 class Board:
     '''
-    board presentative of game
+    board representation of game
     '''
     def __init__ ( self ):
         '''
@@ -27,20 +27,6 @@ class Board:
         # current position row-wise and column-wise
         self._curRow = 1
         self._curCol = 1
-
-
-        # displays the board at the second column and second row by default
-        mvColRight = self.move_column_to_right('r')
-        mvRowDown = self.move_row_down('d')
-
-        self.set_rNc_position( mvColRight, mvRowDown)
-
-
-        # displays the board at the first column and third row by default
-        mvColRight = self.move_column_to_left('l')
-        mvRowDown = self.move_row_down('d')
-
-        self.set_rNc_position( mvColRight, mvRowDown)
 
 
 
