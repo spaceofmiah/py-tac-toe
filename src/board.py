@@ -289,10 +289,12 @@ class Board:
 
 
 
-    def remove_mark_in_rNc_position(self):
+    def remove_mark_in_rNc_position(self, playerObj):
         '''
         helps to remove a mark in current position if a players mark already
         exists. player's mark is represented by {`p1` or `p2`}
+        @param playerObj:
+            current playing players object... ( player trying to remove mark  )
         '''
 
         # will be false if a players mark is present
@@ -303,14 +305,20 @@ class Board:
         # remove mark if player mark is present
         if self._curRow != 0 and self._curCol != 0:
             if can_remove_mark:
-                self._board[self._curRow-1].pop(self._curCol-1)
-                self._board[self._curRow-1].insert(self._curCol-1, 'np')
+                # validate if the mark present at current position is same as the
+                # players mark
+                if self._board[self._curRow-1][self._curCol-1] == playerObj.playerMark:
+                    self._board[self._curRow-1].pop(self._curCol-1)
+                    self._board[self._curRow-1].insert(self._curCol-1, 'np')
 
 
         else:
             if can_remove_mark:
-                self._board[self._curRow].pop(self._curCol)
-                self._board[self._curRow].insert(self._curCol, 'np')
+                # validate if the mark present at current position is same as the
+                # players mark
+                if self._board[self._curRow][self._curCol] == playerObj.playerMark:
+                    self._board[self._curRow].pop(self._curCol)
+                    self._board[self._curRow].insert(self._curCol, 'np')
 
 
 

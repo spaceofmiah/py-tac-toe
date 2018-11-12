@@ -114,6 +114,7 @@ def compute_input_received( i_recieved, board_obj ):
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
+
     if i_recieved.lower().startswith('m'):
         playingPlayer = get_playing_player( )
         board_obj.mark_rNc_position(playingPlayer.playerMark)
@@ -122,6 +123,16 @@ def compute_input_received( i_recieved, board_obj ):
         swap_player_turn( )
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
+
+
+    if i_recieved.lower().startswith('z'):
+        playingPlayer = get_playing_player( )
+        board_obj.remove_mark_in_rNc_position(playingPlayer)
+        row_num = board_obj.get_current_row( )
+        col_num = board_obj.get_current_column( )
+        display_top_info( )
+        board_obj.set_rNc_position(col_num, row_num)
+
 
 
 
