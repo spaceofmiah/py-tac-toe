@@ -275,11 +275,11 @@ class Board:
 
 
 
-    def mark_rNc_position(self):
+    def mark_rNc_position(self, marker):
         '''
         helps to mark current position if no mark is already present
         '''
-
+        new_mark = self._validate_marker(marker)
         can_mark_position = self._check_mark_presence()
 
         # curRow and curCol doesn't start from 0 and our list is 0 indexed
@@ -288,15 +288,53 @@ class Board:
         if self._curRow != 0 and self._curCol != 0:
             if can_mark_position:
                 self._board[self._curRow-1].pop(self._curCol-1)
-                self._board[self._curRow-1].insert(self._curCol-1, "nm")
+                self._board[self._curRow-1].insert(self._curCol-1, new_mark)
 
         else:
             if can_mark_position:
                 self._board[self._curRow].pop(self._curCol)
-                self._board[self._curRow].insert(self._curCol, "nm")
+                self._board[self._curRow].insert(self._curCol, new_mark)
 
 
 
+
+    def remove_mark_in_rNc_position(self):
+        '''
+        helps to remove a mark in current position if a players mark already
+        exists. player's mark is represented by {`p1` or `p2`}
+        '''
+
+        # will be false if a players mark is present
+        # will be true if a player's mark is not present
+
+        can_remove_mark = not self._check_mark_presence()
+
+        # remove mark if player mark is present
+        if self._curRow != 0 and self._curCol != 0:
+            if can_remove_mark:
+                self._board[self._curRow-1].pop(self._curCol-1)
+                self._board[self._curRow-1].insert(self._curCol-1, 'np')
+
+
+        else:
+            if can_remove_mark:
+                self._board[self._curRow].pop(self._curCol)
+                self._board[self._curRow].insert(self._curCol, 'np')
+
+
+
+    def _validate_marker(self, marker):
+        '''
+        validates the length of marker. marker is to be 2 characters long
+        '''
+        if len(marker) > 2:
+            # convert to string and to list
+            marker = list(str(marker))
+
+            # return the first two element
+            return ''.join(marker[:2])
+
+        return marker
 
 
     def _check_mark_presence(self):
