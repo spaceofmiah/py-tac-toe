@@ -1,11 +1,17 @@
 # imports
 from player import Player
+from board import Board
 
+#************************** Needed global variable ************************** #
 
-gameFlag = True         # while be used to control how game is played
 turns = 1               # turns which denotes which player's turn it is to play
+gameFlag = True         # while be used to control how game is played
+
+pOne = pTwo = None
 
 
+
+# ************************ Helper Method Declaration *********************** #
 
 def note_which_player( turns ):
     '''
@@ -22,6 +28,7 @@ def swap_player_turn( ):
     '''
     changes turns of players to play
     '''
+
     # use the global turns variable
     global turns
 
@@ -31,6 +38,38 @@ def swap_player_turn( ):
     elif turns == 2:
         turns -= 1
 
+
+
+def compute_input_received( i_recieved, board_obj ):
+    '''
+    call appropriate method based on the input received
+    '''
+    if i_recieved.lower().startswith('r'):
+        col_num = board_obj.move_column_to_right(i_recieved)
+        row_num = board_obj.get_current_row( )
+        board_obj.set_rNc_position(col_num, row_num)
+
+    if i_recieved.lower().startswith('l'):
+        col_num = board_obj.move_column_to_left(i_recieved)
+        row_num = board_obj.get_current_row( )
+        board_obj.set_rNc_position(col_num, row_num)
+
+    if i_recieved.lower().startswith('u'):
+        col_num = board_obj.get_current_column( )
+        row_num = board_obj.move_row_up(i_recieved )
+        board_obj.set_rNc_position(col_num, row_num)
+
+
+    if i_recieved.lower().startswith('d'):
+        col_num = board_obj.get_current_column( )
+        row_num = board_obj.move_row_down(i_recieved )
+        board_obj.set_rNc_position(col_num, row_num)
+
+
+
+
+
+# ********************** Implementation of game engine ******************** #
 
 
 # create players ( players can only be 2 )
@@ -45,12 +84,19 @@ for i in range(1, 3, 1):
 
 
 
-swap_player_turn()
-print(note_which_player(turns))
-swap_player_turn()
-print(note_which_player(turns))
+# draw board
+board = Board( )
 
-# while( gameFlag ){
-#
-#
-# }
+
+while( gameFlag ):
+    # draw board when game starts
+
+    # receive inputs ( compute for navigation
+    # `l` --- left              `r` --- right
+    # `u` --- up                `d` --- down
+    recieved_input = input("\n\n>>>  ")
+    compute_input_received( recieved_input, board )
+
+
+    # quit from the loop
+    # gameFlag = False

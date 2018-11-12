@@ -29,6 +29,11 @@ class Board:
         self._curCol = 1
 
 
+        # by default when a board is drawn it set the
+        # row at position 1 and set the column at position 1
+        self.set_rNc_position(self._curRow, self._curCol)
+
+
 
     def _drawBoard( self, rowNum ):
         '''
@@ -343,3 +348,20 @@ class Board:
             return False
         else:
             return True
+
+
+
+    def get_current_row(self):
+        '''
+        returns the current row
+        '''
+        return self._curRow
+
+
+
+
+    def get_current_column(self):
+        '''
+        returns the current column
+        '''
+        return self._curCol
