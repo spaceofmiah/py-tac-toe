@@ -8,9 +8,9 @@ class Board:
         '''
         # sets the structure of board
         self._board = [
-            [],[],[],
-            [],[],[],
-            [],[],[]
+            ["p1", "p1", "p2"],
+            ["p1", "p1", "p2"],
+            ["p1", "p1", "p2"],
         ]
 
 
@@ -21,7 +21,7 @@ class Board:
 
 
         # mark position
-        self.colMark = 4
+        self.colMark = 7
 
 
         # current position row-wise and column-wise
@@ -48,35 +48,24 @@ class Board:
         PRIVATE METHOD
         draws tic tac toe board UI
         '''
-        count = 0
+        rowCount = 1
 
         # validate row number
         self._curRow = self._validate_rNc_number(rowNum)
 
-        for row in range(len(self._board)):
+        for row in self._board:
+          print("----------------------")
 
-            if row is not 0 and row % 3 == 0:
-                count += 1
-                print('|\n' + '|   ' * 3 +
-                      f'''| {
-                               self._mark_row_position_on_board(
-                                   count, self._curRow
-                                 )
-                            }'''
-                     )
+          for col in row:
+              print("|  " + col, end="  ")
 
+          print(
+            f"| { self._mark_row_position_on_board(rowCount, self._curRow)}"
+          ) # end of a row
 
-            print("|***", end="")
+          rowCount += 1
 
-        print('|\n' + '|   ' * 3 +
-              f'''| {
-                       self._mark_row_position_on_board(
-                           3, self._curRow
-                         )
-                    }'''
-             )
-
-        print('|___'* 3 + "|")
+        print("----------------------")
 
 
 
@@ -114,7 +103,7 @@ class Board:
             the desired row number in which mark will be placed representing
             the current row
         '''
-        print(" " * (self.colMark * self._curCol - 2) + "C")
+        print(" " * (self.colMark * self._curCol - 4) + "C")
         self._drawBoard( rowNum )
 
 
