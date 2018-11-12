@@ -40,6 +40,28 @@ def swap_player_turn( ):
 
 
 
+def display_top_info( ):
+    '''
+    displays needed information at the top of game view
+    '''
+    print(
+    '''
+    \n\n
+    0000000000000000000000000000000000000000000000000000000000000
+    |               * navigation around board *                 |
+    0000000000000000000000000000000000000000000000000000000000000
+    |                                                           |
+    | `l` --- move column left        `r` --- move column right |
+    | `u` --- move row up             `d` --- move row down     |
+    |                                                           |
+    0000000000000000000000000000000000000000000000000000000000000
+    \n\n
+    '''
+    )
+
+
+
+
 def compute_input_received( i_recieved, board_obj ):
     '''
     call appropriate method based on the input received
@@ -47,22 +69,26 @@ def compute_input_received( i_recieved, board_obj ):
     if i_recieved.lower().startswith('r'):
         col_num = board_obj.move_column_to_right(i_recieved)
         row_num = board_obj.get_current_row( )
+        display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
     if i_recieved.lower().startswith('l'):
         col_num = board_obj.move_column_to_left(i_recieved)
         row_num = board_obj.get_current_row( )
+        display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
     if i_recieved.lower().startswith('u'):
         col_num = board_obj.get_current_column( )
         row_num = board_obj.move_row_up(i_recieved )
+        display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
 
     if i_recieved.lower().startswith('d'):
         col_num = board_obj.get_current_column( )
         row_num = board_obj.move_row_down(i_recieved )
+        display_top_info()
         board_obj.set_rNc_position(col_num, row_num)
 
 
@@ -83,6 +109,9 @@ for i in range(1, 3, 1):
         pTwo = Player(i, name)
 
 
+
+# display top info
+display_top_info( )
 
 # draw board
 board = Board( )
