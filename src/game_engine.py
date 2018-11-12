@@ -7,7 +7,8 @@ from board import Board
 turns = 1               # turns which denotes which player's turn it is to play
 gameFlag = True         # while be used to control how game is played
 
-pOne = pTwo = None
+
+pOne = pTwo = playingPlayer = None
 
 
 
@@ -44,20 +45,43 @@ def display_top_info( ):
     '''
     displays needed information at the top of game view
     '''
+    its_player_turn = get_playing_player().playerName
+
     print(
-    '''
+    f'''
     \n\n
-    0000000000000000000000000000000000000000000000000000000000000
-    |               * navigation around board *                 |
-    0000000000000000000000000000000000000000000000000000000000000
-    |                                                           |
-    | `l` --- move column left        `r` --- move column right |
-    | `u` --- move row up             `d` --- move row down     |
-    |                                                           |
-    0000000000000000000000000000000000000000000000000000000000000
+    00000000000000000000000000000000000000000000000000000000000000000000000
+    |                        * Game Action Keys*                          |
+    00000000000000000000000000000000000000000000000000000000000000000000000
+    |                                                                     |
+    | (** navigate board **)                                              |
+    |                                                                     |
+    | `l` --- move column left        `r` --- move column right           |
+    | `u` --- move row up             `d` --- move row down               |
+    |                                                                     |
+    | (** Play and Unplay **)                                             |
+    |                                                                     |
+    | `m` --- mark current row and column position on board as played     |
+    | `z` --- deletes mark from current row and column position on board  |
+    |                                                                     |
+    00000000000000000000000000000000000000000000000000000000000000000000000
+
+                             ** { its_player_turn }'s turn **
     \n\n
     '''
     )
+
+
+
+def get_playing_player( ):
+    '''
+    returns the player who's currently playing
+    '''
+    if turns == 1:
+        return pOne
+    return pTwo
+
+
 
 
 
@@ -84,11 +108,19 @@ def compute_input_received( i_recieved, board_obj ):
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
-
     if i_recieved.lower().startswith('d'):
         col_num = board_obj.get_current_column( )
         row_num = board_obj.move_row_down(i_recieved )
-        display_top_info()
+        display_top_info( )
+        board_obj.set_rNc_position(col_num, row_num)
+
+    if i_recieved.lower().startswith('m'):
+        playingPlayer = get_playing_player( )
+        board_obj.mark_rNc_position(playingPlayer.playerMark)
+        row_num = board_obj.get_current_row( )
+        col_num = board_obj.get_current_column( )
+        swap_player_turn( )
+        display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
 
 
