@@ -130,14 +130,40 @@ def compute_input_received( i_recieved, board_obj ):
     # empty position in case mark was not placed
 
     if i_recieved.lower().startswith('m'):
+        was_marked = False
+        err_msg = ''
         playingPlayer = get_playing_player( )
-        was_marked = board_obj.mark_rNc_position(playingPlayer.playerMark)
-        row_num = board_obj.get_current_row( )
-        col_num = board_obj.get_current_column( )
-        if was_marked:
-            swap_player_turn( )
+
+        # only if a player still have move, then a player will be able to
+        # mark a position
+        if playingPlayer.moveCount > 0:
+            was_marked = board_obj.mark_rNc_position(playingPlayer.playerMark)
+            row_num = board_obj.get_current_row( )
+            col_num = board_obj.get_current_column( )
+            playingPlayer.reduce_player_move( )
+
+            if was_marked:
+                swap_player_turn( )
+
+        else:
+            err_msg = f'''
+        {playingPlayer.playerName} are out of moves, remove a mark by using `z` action key !!!
+             \n\n
+             '''
+
+
         display_top_info( )
-        board_obj.set_rNc_position(col_num, row_num)
+
+        if len(err_msg) > 0:
+            print(err_msg)
+            board_obj.set_rNc_position(
+                board_obj.get_current_column(), board_obj.get_current_row()
+            )
+
+        else:
+            board_obj.set_rNc_position(col_num, row_num)
+
+
 
 
     # removes mark from current col and row position in board only when the
@@ -150,6 +176,7 @@ def compute_input_received( i_recieved, board_obj ):
         col_num = board_obj.get_current_column( )
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
+        playingPlayer.increase_player_move( )
 
 
 
