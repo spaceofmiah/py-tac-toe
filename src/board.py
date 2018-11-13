@@ -20,6 +20,9 @@ class Board:
         self._board_nav_char = ["r", "l", "d", "u"]
 
 
+        self._game_won_count = 0
+
+
         # mark position
         self.colMark = 7
 
@@ -288,7 +291,7 @@ class Board:
                 self._board[self._curRow].pop(self._curCol)
                 self._board[self._curRow].insert(self._curCol, new_mark)
                 return True
-                
+
         return False
 
 
@@ -378,3 +381,24 @@ class Board:
         returns the current column
         '''
         return self._curCol
+
+
+
+
+    def check_win_vertically( self, playerObj ):
+        '''
+        checks if there is a win vertically. A win can only be determined only if
+        there is an occurence ( thrice ) of a particular player's mark
+        in identical columns.
+        return the number of count calculated
+        '''
+        if playerObj.moveCount == 0:
+            tempColNum = self._curCol-1
+            for i in range(3):
+                if self._board[i][tempColNum] == playerObj.playerMark :
+                    self._game_won_count += 1
+                else:
+                    self._game_won_count = 0
+                    break
+
+        return self._game_won_count

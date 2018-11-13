@@ -1,4 +1,5 @@
 # imports
+import sys
 from player import Player
 from board import Board
 
@@ -84,6 +85,41 @@ def get_playing_player( ):
 
 
 
+def check_win( board, player_obj ):
+    '''
+    check if there is a win. A win can occur Horizontally, Vertically, &
+    Diagonally. if there is a win it returns True and the pattern in which
+    game was won, else it return False and None
+    @param board:
+        board object
+    @param player_obj:
+        player object
+    '''
+    if board.check_win_vertically( player_obj ) == 3:
+        return True, 'Vertically'
+
+    return False, None
+
+
+
+def display_winner(board, player_obj, pattern):
+    '''
+    displays game winner and stops game play automatically
+    @param board:
+        represents the board object
+    @param player_obj:
+        represents the player object
+    @param pattern:
+        represents the pattern in which a player won the game
+        can be 'Horizontal', 'Vertical', 'Diagonal'
+    '''
+    global gameFlag
+    print(player_obj.playerName + f" wins the game --- { pattern }")
+
+    gameFlag = False
+    sys.exit(0)
+
+
 
 
 def compute_input_received( i_recieved, board_obj ):
@@ -140,14 +176,27 @@ def compute_input_received( i_recieved, board_obj ):
             was_marked = board_obj.mark_rNc_position(playingPlayer.playerMark)
             row_num = board_obj.get_current_row( )
             col_num = board_obj.get_current_column( )
-            playingPlayer.reduce_player_move( )
 
+            # only if the cell was marked then we want to reduce players
+            # move count and also swap players turn
             if was_marked:
+                playingPlayer.reduce_player_move( )
+
+                # if there is a win
+                won, winPattern = check_win( board_obj, playingPlayer)
+                if won:
+                    display_top_info( )
+                    board.set_rNc_position(col_num, row_num)
+                    display_winner( board_obj, playingPlayer, winPattern)
+
+                # if there is no win swap players turn
                 swap_player_turn( )
 
+
+        # when player no longer have a move
         else:
             err_msg = f'''
-        {playingPlayer.playerName} are out of moves, remove a mark by using `z` action key !!!
+    {playingPlayer.playerName} your are out of moves, remove a mark by using `z` action key !!
              \n\n
              '''
 
@@ -177,7 +226,6 @@ def compute_input_received( i_recieved, board_obj ):
         display_top_info( )
         board_obj.set_rNc_position(col_num, row_num)
         playingPlayer.increase_player_move( )
-
 
 
 
@@ -213,7 +261,3 @@ while( gameFlag ):
     # `u` --- up                `d` --- down
     recieved_input = input("\n\n>>>  ")
     compute_input_received( recieved_input, board )
-
-
-    # quit from the loop
-    # gameFlag = False
