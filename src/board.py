@@ -400,5 +400,5 @@ class Board:
                 else:
                     self._game_won_count = 0
                     break
-
+                    
         return self._game_won_count
