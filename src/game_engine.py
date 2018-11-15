@@ -98,6 +98,9 @@ def check_win( board, player_obj ):
     if board.check_win_vertically( player_obj ) == 3:
         return True, 'Vertically'
 
+    if board.check_win_horizontally( player_obj ) == 3:
+        return True, 'Horizontally'
+
     return False, None
 
 

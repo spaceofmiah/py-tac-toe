@@ -400,5 +400,25 @@ class Board:
                 else:
                     self._game_won_count = 0
                     break
-                    
+
+        return self._game_won_count
+
+
+
+    def check_win_horizontally(self, playerObj):
+        '''
+        checks if there is a win horizontally. A win can only be determined only if
+        there is an occurence ( thrice ) of a particular player's mark in
+        rows.
+        returns the number of count calculated
+        '''
+        if playerObj.moveCount == 0:
+            tempRow = self._curRow - 1
+            for i in range(3):
+                if self._board[tempRow][i] == playerObj.playerMark:
+                    self._game_won_count += 1
+                else:
+                    self._game_won_count = 0
+                    break
+
         return self._game_won_count
