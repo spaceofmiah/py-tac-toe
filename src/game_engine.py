@@ -101,6 +101,12 @@ def check_win( board, player_obj ):
     if board.check_win_horizontally( player_obj ) == 3:
         return True, 'Horizontally'
 
+    if board.check_win_left_to_right_diagonally( player_obj ) == 3:
+        return True, 'Left to Right Diagonal'
+
+    if board.check_win_right_to_left_diagonally( player_obj ) == 3:
+        return True, 'Right to Left Diagonal'
+
     return False, None
 
 

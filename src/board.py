@@ -422,3 +422,44 @@ class Board:
                     break
 
         return self._game_won_count
+
+
+
+    def check_win_left_to_right_diagonally(self, playerObj):
+        '''
+        checks if there is a win diagonally(left to right). A win can only be
+        determined only if there is an occurence ( thrice ) of a particular
+        player's mark in rows.
+        returns the number of count calculated
+        '''
+        if playerObj.moveCount == 0:
+            for i in range(3):
+                if self._board[i][i] == playerObj.playerMark:
+                    self._game_won_count += 1
+
+                else:
+                    self._game_won_count = 0
+                    break
+
+        return self._game_won_count
+
+
+
+
+    def check_win_right_to_left_diagonally(self, playerObj):
+        '''
+        checks if there is a win diagonally(right to left). A win can only be
+        determined only if there is an occurence ( thrice ) of a particular
+        player's mark in rows.
+        returns the number of count calculated
+        '''
+        if playerObj.moveCount == 0:
+            for i in range(3):
+                if self._board[i][(2-i)] == playerObj.playerMark:
+                    self._game_won_count += 1
+
+                else:
+                    self._game_won_count = 0
+                    break
+
+        return self._game_won_count
