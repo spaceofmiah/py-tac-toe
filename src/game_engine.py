@@ -181,33 +181,23 @@ def compute_input_received( i_recieved, board_obj ):
 
         # only if a player still have move, then a player will be able to
         # mark a position
-        if playingPlayer.moveCount > 0:
-            was_marked = board_obj.mark_rNc_position(playingPlayer.playerMark)
-            row_num = board_obj.get_current_row( )
-            col_num = board_obj.get_current_column( )
+        was_marked = board_obj.mark_rNc_position(playingPlayer.playerMark)
+        row_num = board_obj.get_current_row( )
+        col_num = board_obj.get_current_column( )
 
-            # only if the cell was marked then we want to reduce players
-            # move count and also swap players turn
-            if was_marked:
-                playingPlayer.reduce_player_move( )
+        # only if the cell was marked then we want to reduce players
+        # move count and also swap players turn
+        if was_marked:
 
-                # if there is a win
-                won, winPattern = check_win( board_obj, playingPlayer)
-                if won:
-                    display_top_info( )
-                    board.set_rNc_position(col_num, row_num)
-                    display_winner( board_obj, playingPlayer, winPattern)
+            # if there is a win
+            won, winPattern = check_win( board_obj, playingPlayer)
+            if won:
+                display_top_info( )
+                board.set_rNc_position(col_num, row_num)
+                display_winner( board_obj, playingPlayer, winPattern)
 
-                # if there is no win swap players turn
-                swap_player_turn( )
-
-
-        # when player no longer have a move
-        else:
-            err_msg = f'''
-    {playingPlayer.playerName} your are out of moves, remove a mark by using `z` action key !!
-             \n\n
-             '''
+            # if there is no win swap players turn
+            swap_player_turn( )
 
 
         display_top_info( )
@@ -224,17 +214,17 @@ def compute_input_received( i_recieved, board_obj ):
 
 
 
-    # removes mark from current col and row position in board only when the
-    # player that's trying to remove the mark is also the one that sets it
-
-    if i_recieved.lower().startswith('z'):
-        playingPlayer = get_playing_player( )
-        board_obj.remove_mark_in_rNc_position(playingPlayer)
-        row_num = board_obj.get_current_row( )
-        col_num = board_obj.get_current_column( )
-        display_top_info( )
-        board_obj.set_rNc_position(col_num, row_num)
-        playingPlayer.increase_player_move( )
+    # # removes mark from current col and row position in board only when the
+    # # player that's trying to remove the mark is also the one that sets it
+    #
+    # if i_recieved.lower().startswith('z'):
+    #     playingPlayer = get_playing_player( )
+    #     board_obj.remove_mark_in_rNc_position(playingPlayer)
+    #     row_num = board_obj.get_current_row( )
+    #     col_num = board_obj.get_current_column( )
+    #     display_top_info( )
+    #     board_obj.set_rNc_position(col_num, row_num)
+    #     playingPlayer.increase_player_move( )
 
 
 

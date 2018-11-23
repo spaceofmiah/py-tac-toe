@@ -296,40 +296,6 @@ class Board:
 
 
 
-
-    def remove_mark_in_rNc_position(self, playerObj):
-        '''
-        helps to remove a mark in current position if a players mark already
-        exists. player's mark is represented by {`p1` or `p2`}
-        @param playerObj:
-            current playing players object... ( player trying to remove mark  )
-        '''
-
-        # will be false if a players mark is present
-        # will be true if a player's mark is not present
-
-        can_remove_mark = not self._check_mark_presence()
-
-        # remove mark if player mark is present
-        if self._curRow != 0 and self._curCol != 0:
-            if can_remove_mark:
-                # validate if the mark present at current position is same as the
-                # players mark
-                if self._board[self._curRow-1][self._curCol-1] == playerObj.playerMark:
-                    self._board[self._curRow-1].pop(self._curCol-1)
-                    self._board[self._curRow-1].insert(self._curCol-1, 'np')
-
-
-        else:
-            if can_remove_mark:
-                # validate if the mark present at current position is same as the
-                # players mark
-                if self._board[self._curRow][self._curCol] == playerObj.playerMark:
-                    self._board[self._curRow].pop(self._curCol)
-                    self._board[self._curRow].insert(self._curCol, 'np')
-
-
-
     def _validate_marker(self, marker):
         '''
         validates the length of marker. marker is to be 2 characters long
@@ -392,14 +358,14 @@ class Board:
         in identical columns.
         return the number of count calculated
         '''
-        if playerObj.moveCount == 0:
-            tempColNum = self._curCol-1
-            for i in range(3):
-                if self._board[i][tempColNum] == playerObj.playerMark :
-                    self._game_won_count += 1
-                else:
-                    self._game_won_count = 0
-                    break
+        # if playerObj.moveCount == 0:
+        tempColNum = self._curCol-1
+        for i in range(3):
+            if self._board[i][tempColNum] == playerObj.playerMark :
+                self._game_won_count += 1
+            else:
+                self._game_won_count = 0
+                break
 
         return self._game_won_count
 
@@ -412,14 +378,14 @@ class Board:
         rows.
         returns the number of count calculated
         '''
-        if playerObj.moveCount == 0:
-            tempRow = self._curRow - 1
-            for i in range(3):
-                if self._board[tempRow][i] == playerObj.playerMark:
-                    self._game_won_count += 1
-                else:
-                    self._game_won_count = 0
-                    break
+        # if playerObj.moveCount == 0:
+        tempRow = self._curRow - 1
+        for i in range(3):
+            if self._board[tempRow][i] == playerObj.playerMark:
+                self._game_won_count += 1
+            else:
+                self._game_won_count = 0
+                break
 
         return self._game_won_count
 
@@ -432,14 +398,14 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
-        if playerObj.moveCount == 0:
-            for i in range(3):
-                if self._board[i][i] == playerObj.playerMark:
-                    self._game_won_count += 1
+        # if playerObj.moveCount == 0:
+        for i in range(3):
+            if self._board[i][i] == playerObj.playerMark:
+                self._game_won_count += 1
 
-                else:
-                    self._game_won_count = 0
-                    break
+            else:
+                self._game_won_count = 0
+                break
 
         return self._game_won_count
 
@@ -453,13 +419,13 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
-        if playerObj.moveCount == 0:
-            for i in range(3):
-                if self._board[i][(2-i)] == playerObj.playerMark:
-                    self._game_won_count += 1
+        # if playerObj.moveCount == 0:
+        for i in range(3):
+            if self._board[i][(2-i)] == playerObj.playerMark:
+                self._game_won_count += 1
 
-                else:
-                    self._game_won_count = 0
-                    break
+            else:
+                self._game_won_count = 0
+                break
 
         return self._game_won_count
