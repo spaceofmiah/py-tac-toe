@@ -21,6 +21,7 @@ class Board:
 
 
         self._game_won_count = 0
+        self._num_of_board_marked = 0
 
 
         # mark position
@@ -429,3 +430,15 @@ class Board:
                 break
 
         return self._game_won_count
+
+
+    def increment_num_of_board_marked( self ):
+        '''
+        '''
+        self._num_of_board_marked += 1
+
+
+    def get_num_board_marked( self ):
+        '''
+        '''
+        return self._num_of_board_marked

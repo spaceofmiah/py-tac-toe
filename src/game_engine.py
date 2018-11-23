@@ -63,7 +63,6 @@ def display_top_info( ):
     | (** Play and Unplay **)                                             |
     |                                                                     |
     | `m` --- mark current row and column position on board as played     |
-    | `z` --- deletes mark from current row and column position on board  |
     |                                                                     |
     00000000000000000000000000000000000000000000000000000000000000000000000
 
@@ -129,6 +128,12 @@ def display_winner(board, player_obj, pattern):
     sys.exit(0)
 
 
+def display_draw(  ):
+    global gameFlag
+    print("** ** Draw ** **")
+
+    gameFlag = False
+    sys.exit( 0 )
 
 
 def compute_input_received( i_recieved, board_obj ):
@@ -188,13 +193,22 @@ def compute_input_received( i_recieved, board_obj ):
         # only if the cell was marked then we want to reduce players
         # move count and also swap players turn
         if was_marked:
+            board_obj.increment_num_of_board_marked( )
 
             # if there is a win
             won, winPattern = check_win( board_obj, playingPlayer)
+
             if won:
                 display_top_info( )
                 board.set_rNc_position(col_num, row_num)
                 display_winner( board_obj, playingPlayer, winPattern)
+
+            # if there is a draw
+            if not won and board.get_num_board_marked( ) == 9:
+                display_top_info( )
+                board.set_rNc_position(col_num, row_num)
+                display_draw( )
+
 
             # if there is no win swap players turn
             swap_player_turn( )
@@ -214,27 +228,12 @@ def compute_input_received( i_recieved, board_obj ):
 
 
 
-    # # removes mark from current col and row position in board only when the
-    # # player that's trying to remove the mark is also the one that sets it
-    #
-    # if i_recieved.lower().startswith('z'):
-    #     playingPlayer = get_playing_player( )
-    #     board_obj.remove_mark_in_rNc_position(playingPlayer)
-    #     row_num = board_obj.get_current_row( )
-    #     col_num = board_obj.get_current_column( )
-    #     display_top_info( )
-    #     board_obj.set_rNc_position(col_num, row_num)
-    #     playingPlayer.increase_player_move( )
-
-
-
-
 
 # ********************** Implementation of game engine ******************** #
 
 
 # create players ( players can only be 2 )
-for i in range(1, 3, 1):
+for i in range(3):
     if i == 1:
         name = input(f"{note_which_player(i)} ---- please enter your name: ")
         pOne = Player(i, name)
