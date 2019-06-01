@@ -2,6 +2,8 @@
 
 Tic Tac Toe game written in python ( CLI ).
 
+![py-tac-toe game (cli)](assets/image/py-tac-toe.png)
+
 ### How it is played
 
 **py-tac-toe** is a two player game. During game play players can only make three moves.
