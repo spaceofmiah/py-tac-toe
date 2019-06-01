@@ -1,6 +1,6 @@
 # imports
 import sys
-from colr import color, Colr as C 
+from colr import color, Colr as C
 from player import Player
 from board import Board
 
@@ -51,7 +51,6 @@ def display_top_info( ):
     
     print(
         C()
-
         .bold().yellow(
             '\n\n\n\n\n\n\n\nxxx  PY-TAC-TOE  xxx\n' +
             '***\t\t ***\n'+
@@ -130,7 +129,7 @@ def display_winner(board, player_obj, pattern):
         can be 'Horizontal', 'Vertical', 'Diagonal'
     '''
     global gameFlag
-    print(player_obj.playerName + f" wins the game --- { pattern }")
+    print("\n" + player_obj.playerName + f" wins the game --- { pattern }")
 
     gameFlag = False
     sys.exit(0)

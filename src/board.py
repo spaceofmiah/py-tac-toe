@@ -1,3 +1,6 @@
+from colr import color
+
+
 class Board:
     '''
     board representation of game
@@ -278,6 +281,12 @@ class Board:
         new_mark = self._validate_marker(marker)
         can_mark_position = self._check_mark_presence()
 
+        # give different color to different player's mark symbol
+        if new_mark == "p1":
+            new_mark = color(new_mark, fore="red")
+        else:
+            new_mark = color(new_mark, fore="blue")
+
         # curRow and curCol doesn't start from 0 and our list is 0 indexed
         # whenever curRow and curCol is not 0 we will always subtract 1
 
@@ -359,7 +368,6 @@ class Board:
         in identical columns.
         return the number of count calculated
         '''
-        # if playerObj.moveCount == 0:
         tempColNum = self._curCol-1
         for i in range(3):
             if self._board[i][tempColNum] == playerObj.playerMark :
@@ -379,7 +387,6 @@ class Board:
         rows.
         returns the number of count calculated
         '''
-        # if playerObj.moveCount == 0:
         tempRow = self._curRow - 1
         for i in range(3):
             if self._board[tempRow][i] == playerObj.playerMark:
