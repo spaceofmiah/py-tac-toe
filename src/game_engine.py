@@ -1,5 +1,6 @@
 # imports
 import sys
+from colr import color, Colr as C 
 from player import Player
 from board import Board
 
@@ -47,28 +48,35 @@ def display_top_info( ):
     displays needed information at the top of game view
     '''
     its_player_turn = get_playing_player().playerName
-
+    
     print(
-    f'''
-    \n\n
-    00000000000000000000000000000000000000000000000000000000000000000000000
-    |                        * Game Action Keys*                          |
-    00000000000000000000000000000000000000000000000000000000000000000000000
-    |                                                                     |
-    | (** navigate board **)                                              |
-    |                                                                     |
-    | `l` --- move column left        `r` --- move column right           |
-    | `u` --- move row up             `d` --- move row down               |
-    |                                                                     |
-    | (** Play and Unplay **)                                             |
-    |                                                                     |
-    | `m` --- mark current row and column position on board as played     |
-    |                                                                     |
-    00000000000000000000000000000000000000000000000000000000000000000000000
+        C()
 
-                             ** { its_player_turn }'s turn **
-    \n\n
-    '''
+        .bold().yellow(
+            '\n\n\n\n\n\n\n\nxxx  PY-TAC-TOE  xxx\n' +
+            '***\t\t ***\n'+
+            '***\t\t ***'
+        )
+
+        (
+            """\n\n 
+INSTRUCTIONS:
+=============
+            """
+        )
+
+        .bold().magenta('\nl ')
+        (':\tmove column left')
+        .bold().magenta('\nr ')
+        (':\tmove column right')
+        .bold().magenta('\nu ')
+        (':\tmove row up')
+        .bold().magenta('\nd ')
+        (':\tmove row down')
+        .bold().magenta('\nm ')
+        (':\tcheck/uncheck position')
+        .bold().bright().yellow('\n***\t***\t***\n')
+        .bold().bright().blue(f"\n--> {its_player_turn}'s turn\n")
     )
 
 
