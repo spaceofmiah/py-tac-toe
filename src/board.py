@@ -32,13 +32,13 @@ class Board:
 
 
         # current position row-wise and column-wise
-        self._curRow = 1
-        self._curCol = 1
+        self._current_row = 1
+        self._current_column = 1
 
 
         # by default when a board is drawn it set the
         # row at position 1 and set the column at position 1
-        self.set_rNc_position(self._curRow, self._curCol)
+        self.set_rNc_position(self._current_row, self._current_column)
 
 
 
@@ -50,7 +50,7 @@ class Board:
         rowCount = 1
 
         # validate row number
-        self._curRow = self._validate_rNc_number(rowNum)
+        self._current_row = self._validate_rNc_number(rowNum)
 
         for row in self._board:
           print("----------------------")
@@ -59,7 +59,7 @@ class Board:
               print("|  " + col, end="  ")
 
           print(
-            f"| { self._set_row_position_on_board(rowCount, self._curRow)}"
+            f"| { self._set_row_position_on_board(rowCount, self._current_row)}"
           ) # end of a row
 
           rowCount += 1
@@ -83,7 +83,7 @@ class Board:
             rowNum is the desired row number a user chooses to work on
         '''
         # validate passed column
-        self._curCol = self._validate_rNc_number(colNum)
+        self._current_column = self._validate_rNc_number(colNum)
 
         # mark and drawboard
         self._set_column_position_and_draw_board( rowNum )
@@ -102,7 +102,7 @@ class Board:
             the desired row number in which mark will be placed representing
             the current row
         '''
-        print(" " * (self.colMark * self._curCol - 4) + "C")
+        print(" " * (self.colMark * self._current_column - 4) + "C")
         self._drawBoard( rowNum )
 
 
@@ -166,13 +166,13 @@ class Board:
         '''
         rightMv = self._validate_rNc_movement_input(right)
         if rightMv.lower() == "r":
-            # if the current column number is not 3 yet, then will the
+            # if the current column number is not yet 3, only then will the
             # current column be incremented by one
-            if self._curCol != 3:
-                self._curCol += 1
-                return self._curCol
+            if self._current_column != 3:
+                self._current_column += 1
+                return self._current_column
 
-        return self._curCol
+        return self._current_column
 
 
 
@@ -190,11 +190,11 @@ class Board:
         if leftMv.lower() == "l":
             # if the current column number is not 1 yet, then will the
             # current column be decremented by one
-            if self._curCol != 1:
-                self._curCol -= 1
-                return self._curCol
+            if self._current_column != 1:
+                self._current_column -= 1
+                return self._current_column
 
-        return self._curCol
+        return self._current_column
 
 
 
@@ -212,11 +212,11 @@ class Board:
         if mvDown.lower() == "d":
             # if the current row number is not 3 yet, then will the
             # current row be incremented by one
-            if self._curRow != 3:
-                self._curRow += 1
-                return self._curRow
+            if self._current_row != 3:
+                self._current_row += 1
+                return self._current_row
 
-        return self._curRow
+        return self._current_row
 
 
 
@@ -234,11 +234,11 @@ class Board:
         if mvUp.lower() == "u":
             # if the current row number is not 3 yet, then will the
             # current row be incremented by one
-            if self._curRow != 1:
-                self._curRow -= 1
-                return self._curRow
+            if self._current_row != 1:
+                self._current_row -= 1
+                return self._current_row
 
-        return self._curRow
+        return self._current_row
 
 
 
@@ -290,16 +290,16 @@ class Board:
         # curRow and curCol doesn't start from 0 and our list is 0 indexed
         # whenever curRow and curCol is not 0 we will always subtract 1
 
-        if self._curRow != 0 and self._curCol != 0:
+        if self._current_row != 0 and self._current_column != 0:
             if can_mark_position:
-                self._board[self._curRow-1].pop(self._curCol-1)
-                self._board[self._curRow-1].insert(self._curCol-1, new_mark)
+                self._board[self._current_row-1].pop(self._current_column-1)
+                self._board[self._current_row-1].insert(self._current_column-1, new_mark)
                 return True
 
         else:
             if can_mark_position:
-                self._board[self._curRow].pop(self._curCol)
-                self._board[self._curRow].insert(self._curCol, new_mark)
+                self._board[self._current_row].pop(self._current_column)
+                self._board[self._current_row].insert(self._current_column, new_mark)
                 return True
 
         return False
@@ -327,19 +327,17 @@ class Board:
         in board. returns true if user can mark else it returns false
         '''
 
-        # curRow and curCol doesn't start from 0 and our list is 0 indexed
-        # whenever curRow and curCol is not 0 we will always subtract 1
+        # _current_row and _current_column doesn't start from 0 and our list is 0 indexed
+        # whenever _current_row and _current_column is not 0 we will always subtract 1
 
-        if self._curRow > 0 and self._curCol > 0:
-            result = self._board[self._curRow-1][self._curCol-1]
+        if self._current_row > 0 and self._current_column > 0:
+            result = self._board[self._current_row-1][self._current_column-1].strip()
         else:
-            result = self._board[self._curRow][self._curCol]
-
-
-        if result == 'p1' or result == 'p2':
+            result = self._board[self._current_row][self._current_column].strip()
+        print(result)
+        if result != "np":
             return False
-        else:
-            return True
+        return True
 
 
 
@@ -347,7 +345,7 @@ class Board:
         '''
         returns the current row
         '''
-        return self._curRow
+        return self._current_row
 
 
 
@@ -356,7 +354,7 @@ class Board:
         '''
         returns the current column
         '''
-        return self._curCol
+        return self._current_column
 
 
 
@@ -368,9 +366,11 @@ class Board:
         in identical columns.
         return the number of count calculated
         '''
-        tempColNum = self._curCol-1
+        # we use metrix to draw table, whose count begins from 0
+        # so whatever the current column is, we'll subtract one.
+        column_num = self._current_column-1     
         for i in range(3):
-            if self._board[i][tempColNum] == playerObj.playerMark :
+            if self._board[i][column_num] == playerObj.playerMark :
                 self._game_won_count += 1
             else:
                 self._game_won_count = 0
@@ -387,9 +387,9 @@ class Board:
         rows.
         returns the number of count calculated
         '''
-        tempRow = self._curRow - 1
+        row_num = self._current_row - 1
         for i in range(3):
-            if self._board[tempRow][i] == playerObj.playerMark:
+            if self._board[row_num][i] == playerObj.playerMark:
                 self._game_won_count += 1
             else:
                 self._game_won_count = 0
@@ -406,7 +406,6 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
-        # if playerObj.moveCount == 0:
         for i in range(3):
             if self._board[i][i] == playerObj.playerMark:
                 self._game_won_count += 1
