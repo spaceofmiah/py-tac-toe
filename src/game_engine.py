@@ -211,7 +211,7 @@ def compute_input_received( i_recieved, board_obj ):
                 display_winner( board_obj, playingPlayer, winPattern)
 
             # if there is a draw
-            if not won and board.get_num_board_marked( ) == 9:
+            if not won and board.get_total_marks_on_board( ) == 9:
                 display_top_info( )
                 board.set_rNc_position(col_num, row_num)
                 display_draw( )

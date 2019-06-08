@@ -476,7 +476,7 @@ class Board:
         self._num_of_board_marked += 1
 
 
-    def get_num_board_marked( self ):
+    def get_total_marks_on_board( self ):
         '''
         '''
         return self._num_of_board_marked
