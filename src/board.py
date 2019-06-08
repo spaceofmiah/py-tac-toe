@@ -334,7 +334,6 @@ class Board:
             result = self._board[self._current_row-1][self._current_column-1].strip()
         else:
             result = self._board[self._current_row][self._current_column].strip()
-        print(result)
         if result != "np":
             return False
         return True
@@ -366,16 +365,23 @@ class Board:
         in identical columns.
         return the number of count calculated
         '''
-        # we use metrix to draw table, whose count begins from 0
+        # to iterate vertically on a matrix, the column will be fixed and the row
+        # will increment
+
+        # we use matrix to draw table, whose count begins from 0
         # so whatever the current column is, we'll subtract one.
-        column_num = self._current_column-1     
+        column_num = self._current_column-1
         for i in range(3):
-            if self._board[i][column_num] == playerObj.playerMark :
+
+            # self._board[i][column_num] will not return the player mark on a column,
+            # but instead it will return the building blocks of that column
+            # including the player's mark, column bars( | ) and spaces.
+
+            if  playerObj.playerMark in self._board[i][column_num]:
                 self._game_won_count += 1
             else:
                 self._game_won_count = 0
-                break
-
+        print("game won count --> ", self._game_won_count)
         return self._game_won_count
 
 
@@ -387,9 +393,17 @@ class Board:
         rows.
         returns the number of count calculated
         '''
+        # to iterate horizontally on a matrix, the row will be fixed and the column
+        # will increment
+
         row_num = self._current_row - 1
         for i in range(3):
-            if self._board[row_num][i] == playerObj.playerMark:
+
+            # self._board[row_num][i] will not return the player mark on a row,
+            # but instead it will return the building blocks of that row
+            # including the player's mark, column bars( | ) and spaces.
+
+            if playerObj.playerMark in self._board[row_num][i]:
                 self._game_won_count += 1
             else:
                 self._game_won_count = 0
@@ -406,8 +420,14 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
+        # to iterate diagonally (left to right) on a matrix, the row and the  
+        # column will have increment together. At first increment, position
+        # will be at row 1 column 1, and at second increment, position will
+        # be at row 2 column 2 e.t.c ( it is the column that actually count in the
+        # row of a matrix )
+
         for i in range(3):
-            if self._board[i][i] == playerObj.playerMark:
+            if playerObj.playerMark in self._board[i][i]:
                 self._game_won_count += 1
 
             else:
@@ -426,9 +446,21 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
-        # if playerObj.moveCount == 0:
+        # to iterate diagonally (right to left) on a matrix, the row and the  
+        # column will have decrement together.
+
         for i in range(3):
-            if self._board[i][(2-i)] == playerObj.playerMark:
+            # our matrix is 3 x 3 but multi-dimensional array in python starts
+            # it's counting from 0, so in the real sense our matrix is 2 x 2
+            # (0 becomes 1).
+            #
+            # self._board[i][(2-i)]
+            # simply means, the current row(i), and column ( 2 - i ::: 
+            # if i is 0, then 2-0) ( 2 is the total number of column of matrix
+            # in 0th base ), which will literally makes our column count start
+            # from the right side of the matrix
+
+            if playerObj.playerMark in self._board[i][(2-i)]:
                 self._game_won_count += 1
 
             else:
