@@ -73,7 +73,7 @@ INSTRUCTIONS:
         .bold().magenta('\nd ')
         (':\tmove row down')
         .bold().magenta('\nm ')
-        (':\tcheck/uncheck position')
+        (':\tmark position')
         .bold().bright().yellow('\n***\t***\t***\n')
         .bold().bright().blue(f"\n--> {its_player_turn}'s turn\n")
     )
