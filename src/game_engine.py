@@ -75,7 +75,7 @@ INSTRUCTIONS:
         .bold().magenta('\nm ')
         (':\tmark position')
         .bold().magenta('\nq ')
-        (':\tquit')
+        (':\tquit game')
         .bold().bright().yellow('\n***\t***\t***\n')
         .bold().bright().blue(f"\n--> {its_player_turn}'s turn\n")
     )
