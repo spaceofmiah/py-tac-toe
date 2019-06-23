@@ -22,7 +22,9 @@ A player can navigate around the board using the navigation keys to position whe
 
 ### Required functionalities
 
--- A command key to quit the game immediately
+*this functionality will be removed from this list on next commit*
+-- A command key to quit the game immediately    ( **Completed & Working** )
+    
 
 -- Main menu that displays highest score with outlined navigations below
 
