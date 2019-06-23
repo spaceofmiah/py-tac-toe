@@ -74,6 +74,8 @@ INSTRUCTIONS:
         (':\tmove row down')
         .bold().magenta('\nm ')
         (':\tmark position')
+        .bold().magenta('\nq ')
+        (':\tquit')
         .bold().bright().yellow('\n***\t***\t***\n')
         .bold().bright().blue(f"\n--> {its_player_turn}'s turn\n")
     )
@@ -231,6 +233,14 @@ def compute_input_received( player_input, board_obj ):
 
         else:
             board_obj.set_rNc_position(column_number, row_number)
+    
+
+    if player_input.lower().startswith('q'):
+        print(
+            C()
+            .bold().red('Game not completed, either of you might have won\n\n')
+        )
+        sys.exit()
 
 
 
