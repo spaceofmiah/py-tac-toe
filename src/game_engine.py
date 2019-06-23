@@ -2,7 +2,7 @@
 import sys
 from colr import color, Colr as C
 from player import Player
-from board import Board
+from board import Board, move_right, move_left, move_up, move_down
 
 #************************** Needed global variable ************************** #
 
@@ -153,36 +153,20 @@ def compute_input_received( player_input, board_obj ):
     # updates the current column position by moving it to the right and
     # re-display board
     if player_input.lower().startswith('r'):
-        column_number = board_obj.move_column_to_right(player_input)
-        row_number = board_obj.get_current_row( )
-        display_top_info( )
-        board_obj.set_rNc_position(column_number, row_number)
-
+        move_right(board_obj, display_top_info)
 
     # updates the current column position by moving it to the left and
     # re-display board
     if player_input.lower().startswith('l'):
-        column_number = board_obj.move_column_to_left(player_input)
-        row_number = board_obj.get_current_row( )
-        display_top_info( )
-        board_obj.set_rNc_position(column_number, row_number)
-
+        move_left(board_obj, display_top_info)
 
     # updates the current row position by moving it down and re-display board
     if player_input.lower().startswith('u'):
-        column_number = board_obj.get_current_column( )
-        row_number = board_obj.move_row_up(player_input )
-        display_top_info( )
-        board_obj.set_rNc_position(column_number, row_number)
-
+        move_up(board_obj, display_top_info)
 
     # updates the current row position by moving it down and re-display board
     if player_input.lower().startswith('d'):
-        column_number = board_obj.get_current_column( )
-        row_number = board_obj.move_row_down(player_input )
-        display_top_info( )
-        board_obj.set_rNc_position(column_number, row_number)
-
+        move_down(board_obj, display_top_info)
 
     # add player mark to current row and col position only if that position
     # has not been marked before. A user is given another chance to mark an

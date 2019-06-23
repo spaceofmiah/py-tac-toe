@@ -480,3 +480,68 @@ class Board:
         '''
         '''
         return self._num_of_board_marked
+
+
+
+
+def move_right(board_obj, info_func):
+    """
+    Helps to move a player's position along row to the right
+
+    @param board_obj:
+        An instance object of board.Board class
+
+    @param info_func:
+        A function to pass necessary informations to players
+    """
+    column_number = board_obj.move_column_to_right('r')
+    row_number = board_obj.get_current_row( )
+    info_func( )
+    board_obj.set_rNc_position(column_number, row_number)
+
+
+def move_left(board_obj, info_func):
+    """
+    Helps to move a player's position along row to the left
+
+    @param board_obj:
+        An instance object of board.Board class
+
+    @param info_func:
+        A function to pass necessary informations to players
+    """
+    column_number = board_obj.move_column_to_left('l')
+    row_number = board_obj.get_current_row( )
+    info_func( )
+    board_obj.set_rNc_position(column_number, row_number)
+
+
+def move_up(board_obj, info_func):
+    """
+    Helps to move a player's position upward along column
+
+    @param board_obj:
+        An instance object of board.Board class
+
+    @param info_func:
+        A function to pass necessary informations to players
+    """
+    column_number = board_obj.get_current_column( )
+    row_number = board_obj.move_row_up('u' )
+    info_func( )
+    board_obj.set_rNc_position(column_number, row_number)
+
+def move_down(board_obj, info_func):
+    """
+    Helps to move a player's position downward along column
+
+    @param board_obj:
+        An instance object of board.Board class
+
+    @param info_func:
+        A function to pass necessary informations to players
+    """
+    column_number = board_obj.get_current_column( )
+    row_number = board_obj.move_row_down('d')
+    info_func( )
+    board_obj.set_rNc_position(column_number, row_number)
