@@ -20,16 +20,13 @@ A player can navigate around the board using the navigation keys to position whe
 
 -- d ( moves row position down )
 
-### Required functionalities
-
-*this functionality will be removed from this list on next commit*
--- A command key to quit the game immediately    ( **Completed & Working** )
-    
+### Required functionalities    
 
 -- Main menu that displays highest score with outlined navigations below
 
-    -- Play    -- Create Player    -- Instructions    -- Exit
+> -- Play   
+> -- Create Player   
+> -- Instructions    
+> -- Exit
 
--- Hot key response: Currently, board navigation during game play requires every navigation input to be followed by the return key, which is not actually user friendly. Hot key response will help to process a single input immediately they're inserted and process response for the input
-
--- Persistence ( Pickle should do )
+-- Persistence ( Pickleo r sqlite should do ) : let's keep track of scores and users
