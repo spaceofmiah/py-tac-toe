@@ -1,6 +1,8 @@
 # imports
 import sys
 from colr import color, Colr as C
+from pynput import keyboard
+
 from player import Player
 from board import Board, move_right, move_left, move_up, move_down
 
@@ -224,6 +226,7 @@ def compute_input_received( player_input, board_obj ):
             C()
             .bold().red('Game not completed, either of you might have won\n\n')
         )
+        keyboard.Listener.stop      # stop listening to keyboard event
         sys.exit()
 
 
@@ -252,11 +255,42 @@ display_top_info( )
 board = Board( )
 
 
-while( gameFlag ):
-    # draw board when game starts
+# Keyboard Event Controller
+def on_press(key):
+    """
+    Event handler that capture the key that is pressed on the keyboard.
+    This method listens to keyboard event and computes game logic based
+    on the input / key received from the event
+    """
+    # in pynput keyboard keys are of two types alphanumeric and special
+    # keys. char method can be called on alphanumeric keys to return the
+    # alphabet e.g ('a', 'b', 'c', 'd') while a special key are Enter or
+    # Return Key, Cntrl, Up, Down e.t.c.
+    try:
+        # retrieve the character representation of the key that is pressed
+        # and use it to compute the game logic
+        compute_input_received(key.char, board)
 
-    # receive inputs ( compute for navigation
-    # `l` --- left              `r` --- right
-    # `u` --- up                `d` --- down
-    player_input = input("\n\n>>>  ")
-    compute_input_received( player_input, board )
+        # receive inputs ( compute for navigation
+        # `l` --- left              `r` --- right
+        # `u` --- up                `d` --- down
+        # `m` --- mark              `q` --- quit
+
+    except AttributeError:
+        # if the user press a special key, just ignore and keep listening
+        # for event.
+        pass
+
+def on_release(key):
+    """
+    Event handler that listens if key pressed down is released.
+    It capture the key that was pressed down which is now been released
+    """
+    # If false is returned, the keyboard listener is destroyed
+    return True
+
+
+# Activate the listener
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
+
