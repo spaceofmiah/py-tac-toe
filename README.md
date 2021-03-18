@@ -39,4 +39,6 @@ A player can navigate around the board using the navigation keys to position whe
 > -- Instructions    
 > -- Exit
 
--- Persistence ( Pickleo r sqlite should do ) : let's keep track of scores and users
+-- Persistence ( Pickle or sqlite should do ) : let's keep track of scores and users
+
+-- Play against computer
