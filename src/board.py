@@ -16,31 +16,24 @@ class Board:
             ["np", "np", "np"],
         ]
 
-
         # set board key navigation characters
         # r -- Right { column navigation }     d -- Down { row navigation }
         # l -- Left  { column navigation }     u -- Up   { row navigation }
         self._board_nav_char = ["r", "l", "d", "u"]
 
-
         self._game_won_count = 0
         self._num_of_board_marked = 0
 
-
         # mark position
         self.colMark = 7
-
 
         # current position row-wise and column-wise
         self._current_row = 1
         self._current_column = 1
 
-
         # by default when a board is drawn it set the
         # row at position 1 and set the column at position 1
         self.set_rNc_position(self._current_row, self._current_column)
-
-
 
     def _drawBoard( self, rowNum ):
         '''
@@ -66,10 +59,6 @@ class Board:
 
         print("----------------------")
 
-
-
-
-
     def set_rNc_position( self, colNum, rowNum ):
         '''
         sets row and column position on board interface.
@@ -88,11 +77,6 @@ class Board:
         # mark and drawboard
         self._set_column_position_and_draw_board( rowNum )
 
-
-
-
-
-
     def _set_column_position_and_draw_board(self, rowNum):
         '''
         PRIVATE METHOD
@@ -104,10 +88,6 @@ class Board:
         '''
         print(" " * (self.colMark * self._current_column - 4) + "C")
         self._drawBoard( rowNum )
-
-
-
-
 
     def _set_row_position_on_board( self, count, rowNum ):
         '''
@@ -133,10 +113,6 @@ class Board:
             return" R"
         return ""
 
-
-
-
-
     def _validate_rNc_number( self, colNum ):
         '''
         PRIVATE METHOD
@@ -151,9 +127,6 @@ class Board:
         if colNum < 1:
             return 1
         return colNum
-
-
-
 
     def move_column_to_right(self, right):
         '''
@@ -174,9 +147,6 @@ class Board:
 
         return self._current_column
 
-
-
-
     def move_column_to_left(self, left):
         '''
         changes the current position of the column by decrementing it by one.
@@ -195,9 +165,6 @@ class Board:
                 return self._current_column
 
         return self._current_column
-
-
-
 
     def move_row_down(self, down):
         '''
@@ -218,9 +185,6 @@ class Board:
 
         return self._current_row
 
-
-
-
     def move_row_up(self, up):
         '''
         changes the current position of row by decrementing it by one.
@@ -239,10 +203,6 @@ class Board:
                 return self._current_row
 
         return self._current_row
-
-
-
-
 
     def _validate_rNc_movement_input(self, mvInput):
         '''
@@ -269,9 +229,6 @@ class Board:
         else:
             raise Exception(
                 f"InputError: {mvInput} not an valid navigation character")
-
-
-
 
     def mark_rNc_position(self, marker):
         '''
@@ -304,8 +261,6 @@ class Board:
 
         return False
 
-
-
     def _validate_marker(self, marker):
         '''
         validates the length of marker. marker is to be 2 characters long
@@ -318,7 +273,6 @@ class Board:
             return ''.join(marker[:2])
 
         return marker
-
 
     def _check_mark_presence(self):
         '''
@@ -338,25 +292,17 @@ class Board:
             return False
         return True
 
-
-
     def get_current_row(self):
         '''
         returns the current row
         '''
         return self._current_row
 
-
-
-
     def get_current_column(self):
         '''
         returns the current column
         '''
         return self._current_column
-
-
-
 
     def check_win_vertically( self, playerObj ):
         '''
@@ -371,6 +317,8 @@ class Board:
         # we use matrix to draw table, whose count begins from 0
         # so whatever the current column is, we'll subtract one.
         column_num = self._current_column-1
+        self._game_won_count = 0    # reset game_won_count to 0
+        
         for i in range(3):
 
             # self._board[i][column_num] will not return the player mark on a column,
@@ -381,10 +329,7 @@ class Board:
                 self._game_won_count += 1
             else:
                 self._game_won_count = 0
-        print("game won count --> ", self._game_won_count)
         return self._game_won_count
-
-
 
     def check_win_horizontally(self, playerObj):
         '''
@@ -397,6 +342,8 @@ class Board:
         # will increment
 
         row_num = self._current_row - 1
+        self._game_won_count = 0    # reset game_won_count to 0
+
         for i in range(3):
 
             # self._board[row_num][i] will not return the player mark on a row,
@@ -407,11 +354,7 @@ class Board:
                 self._game_won_count += 1
             else:
                 self._game_won_count = 0
-                break
-
         return self._game_won_count
-
-
 
     def check_win_left_to_right_diagonally(self, playerObj):
         '''
@@ -420,6 +363,8 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
+        self._game_won_count = 0    # reset game_won_count to 0
+        
         # to iterate diagonally (left to right) on a matrix, the row and the  
         # column will have increment together. At first increment, position
         # will be at row 1 column 1, and at second increment, position will
@@ -429,15 +374,9 @@ class Board:
         for i in range(3):
             if playerObj.playerMark in self._board[i][i]:
                 self._game_won_count += 1
-
             else:
                 self._game_won_count = 0
-                break
-
         return self._game_won_count
-
-
-
 
     def check_win_right_to_left_diagonally(self, playerObj):
         '''
@@ -446,6 +385,8 @@ class Board:
         player's mark in rows.
         returns the number of count calculated
         '''
+        self._game_won_count = 0    # reset game_won_count to 
+        
         # to iterate diagonally (right to left) on a matrix, the row and the  
         # column will have decrement together.
 
@@ -462,13 +403,10 @@ class Board:
 
             if playerObj.playerMark in self._board[i][(2-i)]:
                 self._game_won_count += 1
-
             else:
                 self._game_won_count = 0
-                break
 
         return self._game_won_count
-
 
     def increment_num_of_board_marked( self ):
         '''
@@ -499,7 +437,6 @@ def move_right(board_obj, info_func):
     info_func( )
     board_obj.set_rNc_position(column_number, row_number)
 
-
 def move_left(board_obj, info_func):
     """
     Helps to move a player's position along row to the left
@@ -514,7 +451,6 @@ def move_left(board_obj, info_func):
     row_number = board_obj.get_current_row( )
     info_func( )
     board_obj.set_rNc_position(column_number, row_number)
-
 
 def move_up(board_obj, info_func):
     """
