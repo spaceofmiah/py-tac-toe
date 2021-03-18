@@ -191,7 +191,7 @@ def compute_input_received( player_input, board_obj ):
             board_obj.increment_num_of_board_marked( )
 
             # if there is a win
-            won, winPattern = check_win( board_obj, playingPlayer)
+            won, winPattern = check_win(board_obj, playingPlayer)
 
             if won:
                 display_top_info( )
